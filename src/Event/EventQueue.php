@@ -7,15 +7,30 @@ use App\Storage\Reader;
 
 class EventQueue
 {
+    /**
+     * @var Writer
+     */
     private $writer;
+    /**
+     * @var Reader
+     */
     private $reader;
 
-    public function __construct()
+    /**
+     * @param Reader $reader
+     * @param Writer $writer
+     */
+    public function __construct(Reader $reader, Writer $writer)
     {
-        $this->writer = new Writer();
-        $this->reader = new Reader();
+        $this->writer = $writer;
+        $this->reader = $reader;
     }
 
+    /**
+     * @param string $eventType
+     * @param array $data
+     * @return void
+     */
     public function enqueueEvent(string $eventType, array $data): void
     {
         $event = [
@@ -26,6 +41,10 @@ class EventQueue
         $this->saveEvent($event);
     }
 
+    /**
+     * @param array $event
+     * @return void
+     */
     private function saveEvent(array $event): void
     {
         $eventsData = $this->reader->read('events.json');

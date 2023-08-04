@@ -8,15 +8,28 @@ use App\Storage\Writer;
 
 class EventProcessor
 {
+    /**
+     * @var Reader
+     */
     private $reader;
+    /**
+     * @var Writer
+     */
     private $writer;
 
-    public function __construct()
+    /**
+     * @param Reader $reader
+     * @param Writer $writer
+     */
+    public function __construct(Reader $reader, Writer $writer)
     {
-        $this->reader = new Reader();
-        $this->writer = new Writer();
+        $this->reader = $reader;
+        $this->writer = $writer;
     }
 
+    /**
+     * @return string
+     */
     public function processEvents(): string
     {
         $output = '';
@@ -38,6 +51,9 @@ class EventProcessor
         return $output;
     }
 
+    /**
+     * @return array|null
+     */
     private function getNextEvent(): ?array
     {
         $eventsData = $this->reader->read('events.json');
@@ -63,6 +79,10 @@ class EventProcessor
         return $nextEvent;
     }
 
+    /**
+     * @param array $event
+     * @return string|null
+     */
     private function processEvent(array $event): ?string
     {
         $eventType = $event['type'];

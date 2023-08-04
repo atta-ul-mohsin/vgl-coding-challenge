@@ -4,6 +4,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use App\Product;
 use App\Storage\Writer;
+use App\Storage\Reader;
 use App\Event\EventQueue;
 
 // Get product data from command line arguments
@@ -31,12 +32,13 @@ $product = new Product($id, $name, $price);
 // Serialize product data to store in storage
 $data = json_encode($product);
 
-// Write the product data to the storage
+// Create instances of Reader and Writer
+$reader = new Reader();
 $writer = new Writer();
 $writer->create('product_' . $id . '.json', $data);
 
 // Queue event for product creation
-$eventQueue = new EventQueue();
+$eventQueue = new EventQueue($reader, $writer);
 $eventQueue->enqueueEvent('product_created', ['id' => $id, 'name' => $name, 'price' => $price]);
 
 /*// Generate the message for the CLI output

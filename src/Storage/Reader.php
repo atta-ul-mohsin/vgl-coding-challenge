@@ -6,6 +6,10 @@ class Reader
 {
     private const STORAGE_PATH = __DIR__ . '/../../storage/';
 
+    /**
+     * @param string $key
+     * @return string
+     */
     public function read(string $key) : string
     {
         $fileName = $this->createFileName($key);
@@ -23,6 +27,10 @@ class Reader
         return $data;
     }
 
+    /**
+     * @param string $key
+     * @return string
+     */
     private function createFileName(string $key) : string
     {
         return self::STORAGE_PATH . $key;

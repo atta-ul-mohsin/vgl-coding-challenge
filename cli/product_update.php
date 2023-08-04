@@ -51,5 +51,5 @@ $writer = new Writer();
 $writer->update('product_' . $id . '.json', json_encode($updatedProduct));
 
 // Queue event for product update
-$eventQueue = new EventQueue();
+$eventQueue = new EventQueue($reader, $writer);
 $eventQueue->enqueueEvent('product_updated', ['id' => $id, 'changes' => $changes]);
