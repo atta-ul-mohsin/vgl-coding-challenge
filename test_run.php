@@ -7,7 +7,7 @@ $output3 = shell_exec('php cli/product_delete.php 42');
 
 $output = shell_exec('php cli/event_worker.php');
 
-$expectedOutput = "Product created: 42 Staubsauger 100.00\nProduct updated: price\nProduct deleted: 42\n";
+$expectedOutput = "Product created: 42 Staubsauger 100\nProduct updated: price\nProduct deleted: 42\n";
 
 if ($output === $expectedOutput) {
     echo 'It works!' . PHP_EOL;

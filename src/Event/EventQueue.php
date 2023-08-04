@@ -37,7 +37,7 @@ class EventQueue
 
         $events[] = $event;
 
-        $updatedEventsData = json_encode(['events' => $events]);
+        $updatedEventsData = json_encode($events);
         $this->writer->update('events.json', $updatedEventsData);
     }
 }

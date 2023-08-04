@@ -2,8 +2,6 @@
 
 namespace App\Event;
 
-require_once __DIR__ . '/../Storage/Reader.php';
-require_once __DIR__ . '/../Storage/Writer.php';
 
 use App\Storage\Reader;
 use App\Storage\Writer;
@@ -50,7 +48,7 @@ class EventProcessor
         }
 
         $nextEvent = array_shift($events);
-        //$nextEvent = $nextEvent[0]??$nextEvent;
+
         if (!isset($nextEvent['type']) || !isset($nextEvent['data'])) {
             // Invalid event format, log an error and skip this event
             // Or you can handle the error in any way that suits your application
@@ -59,7 +57,7 @@ class EventProcessor
         }
 
         // Save the updated events back to the file
-        $updatedEventsData = json_encode(['events' => array_values($events)]);
+        $updatedEventsData = json_encode(array_values($events));
         $this->writer->update('events.json', $updatedEventsData);
 
         return $nextEvent;
@@ -74,7 +72,7 @@ class EventProcessor
             case 'product_created':
                 return "Product created: {$data['id']} {$data['name']} {$data['price']}";
             case 'product_updated':
-                return "Product updated: {$data['changes']}";
+                return "Product updated: ".implode(',', $data['changes'])."";
             case 'product_deleted':
                 return "Product deleted: {$data['id']}";
             default:

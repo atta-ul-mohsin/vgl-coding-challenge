@@ -1,9 +1,6 @@
 <?php declare(strict_types=1);
 
-require_once __DIR__ . '/../src/Product.php';
-require_once __DIR__ . '/../src/Storage/Writer.php';
-require_once __DIR__ . '/../src/Storage/Reader.php';
-require_once __DIR__ . '/../src/Event/EventQueue.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 use App\Product;
 use App\Storage\Writer;
